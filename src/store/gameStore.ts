@@ -18,59 +18,38 @@ const useGameStore = create<GameState>((set) => ({
         const newBoard = [...state.board];
         newBoard[index] = state.currentPlayer;
         const winner = checkWinner(newBoard);
-        if (winner) {
-          if (winner === GAME_STATE_KEYS.PLAYER_1) {
-            return {
-              board: newBoard,
-              winner: GAME_STATE_KEYS.PLAYER_1,
-              currentPlayer:
-                state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
-                  ? GAME_STATE_KEYS.PLAYER_2
-                  : GAME_STATE_KEYS.PLAYER_1,
-              wins: {
-                ...state.wins,
-                X: state.wins.X + 1,
-              },
-            };
-          } else if (winner === GAME_STATE_KEYS.PLAYER_2) {
-            return {
-              board: newBoard,
-              winner: GAME_STATE_KEYS.PLAYER_2,
-              currentPlayer:
-                state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
-                  ? GAME_STATE_KEYS.PLAYER_2
-                  : GAME_STATE_KEYS.PLAYER_1,
-              wins: {
-                ...state.wins,
-                O: state.wins.O + 1,
-              },
-            };
-          } else {
-            return {
-              board: newBoard,
-              currentPlayer:
-                state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
-                  ? GAME_STATE_KEYS.PLAYER_2
-                  : GAME_STATE_KEYS.PLAYER_1,
-              wins: {
-                ...state.wins,
-                ties: state.wins.ties + 1,
-              },
-            };
-          }
-        } else {
-          return {
-            board: newBoard,
-            currentPlayer:
-              state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
-                ? GAME_STATE_KEYS.PLAYER_2
-                : GAME_STATE_KEYS.PLAYER_1,
-          };
-        }
+
+        return {
+          board: newBoard,
+          currentPlayer:
+            state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
+              ? GAME_STATE_KEYS.PLAYER_2
+              : GAME_STATE_KEYS.PLAYER_1,
+          winner: winner,
+          wins: state.handleUpdateWins(winner, state),
+        };
       }
+
       return state;
     });
   },
+
+  handleUpdateWins: (winner, state) => {
+    if (winner === GAME_STATE_KEYS.PLAYER_1) {
+      return { ...state.wins, X: state.wins.X + 1 };
+    }
+
+    if (winner === GAME_STATE_KEYS.PLAYER_2) {
+      return { ...state.wins, O: state.wins.O + 1 };
+    }
+
+    if (winner === GAME_STATE_KEYS.TIE) {
+      return { ...state.wins, ties: state.wins.ties + 1 };
+    }
+
+    return state.wins;
+  },
+
   resetGame: () => {
     set({
       board: Array(9).fill(null),
@@ -78,6 +57,7 @@ const useGameStore = create<GameState>((set) => ({
       winner: null,
     });
   },
+
   resetStats: () => {
     set({ wins: { X: 0, O: 0, ties: 0 } });
   },

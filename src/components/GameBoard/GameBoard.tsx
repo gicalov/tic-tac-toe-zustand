@@ -56,19 +56,30 @@ const GameBoard = () => {
     <Space style={styleGameBoardContainer} direction="vertical" align="center">
       <Space>
         {winner ? (
-          <>
-            <Typography>победил игрок: </Typography>
-            <Typography style={styleWinnerText}>
-              {detectСurrentPlayer(winner)}
-            </Typography>
-            {isShowConfetti && (
-              <Confetti
-                style={styleConfetti}
-                gravity={10}
-                numberOfPieces={1000}
+          winner === "tie" ? (
+            <Space direction="vertical">
+              <Typography>ничья </Typography>
+              <img
+                style={{ width: "200px" }}
+                src={GAME_IMAGES.grusni.src}
+                alt={GAME_IMAGES.grusni.alt}
               />
-            )}
-          </>
+            </Space>
+          ) : (
+            <>
+              <Typography>победил игрок: </Typography>
+              <Typography style={styleWinnerText}>
+                {detectСurrentPlayer(winner)}
+              </Typography>
+              {isShowConfetti && (
+                <Confetti
+                  style={styleConfetti}
+                  gravity={10}
+                  numberOfPieces={1000}
+                />
+              )}
+            </>
+          )
         ) : (
           <>
             <Space style={styleCyrrentPlayerBox}>
