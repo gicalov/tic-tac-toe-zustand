@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import useGameStore from "../../store/gameStore";
 import Confetti from "react-confetti";
+import { Button, Space, Typography } from "antd";
+import {
+  GAME_STATE_KEYS,
+  SHOW_CONFETTI_MILISECONSD,
+  GAME_IMAGES,
+} from "../../constants";
 import {
   styleCell,
   styleField,
   styleGameBoardContainer,
   styleNolick,
+  styleWinnerText,
+  styleConfetti,
+  styleCyrrentPlayerBox,
+  styleCurrentPlayerText,
 } from "./style";
-import nolick from "../../assets/3F3F%3F.webp";
 
 const GameBoard = () => {
   const [isShowConfetti, setIsShowConfetti] = useState<boolean>(false);
@@ -16,12 +25,14 @@ const GameBoard = () => {
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null;
+
     if (winner) {
       setIsShowConfetti(true);
       timer = setTimeout(() => {
         setIsShowConfetti(false);
-      }, 3000);
+      }, SHOW_CONFETTI_MILISECONSD);
     }
+
     return () => {
       if (timer) {
         clearTimeout(timer);
@@ -29,69 +40,59 @@ const GameBoard = () => {
     };
   }, [winner]);
 
-  const detectСurrentЗlayer = (cell: string | null): React.ReactNode => {
-    return cell === "✟" ? (
-      "✟"
-    ) : cell === "◯" ? (
-      <img style={styleNolick} src={nolick} />
+  const detectСurrentPlayer = (cell: string | null): React.ReactNode => {
+    return cell === GAME_STATE_KEYS.PLAYER_1 ? (
+      GAME_STATE_KEYS.PLAYER_1
+    ) : cell === GAME_STATE_KEYS.PLAYER_2 ? (
+      <img
+        style={styleNolick}
+        src={GAME_IMAGES.nolick.src}
+        alt={GAME_IMAGES.nolick.alt}
+      />
     ) : null;
   };
 
   return (
-    <div style={styleGameBoardContainer}>
-      <div>
+    <Space style={styleGameBoardContainer} direction="vertical" align="center">
+      <Space>
         {winner ? (
           <>
-            <div>победил игрок: </div>
-            <div style={{ fontSize: "60px" }}>
-              {detectСurrentЗlayer(winner)}
-            </div>
+            <Typography>победил игрок: </Typography>
+            <Typography style={styleWinnerText}>
+              {detectСurrentPlayer(winner)}
+            </Typography>
             {isShowConfetti && (
               <Confetti
-                style={{ width: "100vw" }}
+                style={styleConfetti}
                 gravity={10}
-                numberOfPieces={10000}
-                // drawShape={(ctx) => {
-                //   ctx.beginPath();
-                //   for (let i = 0; i < 10; i++) {
-                //     const angle = (Math.PI * 2 * i) / 10;
-                //     const x = (0.2 + 1.2 * angle) * Math.cos(angle);
-                //     const y = (0.2 + 1.2 * angle) * Math.sin(angle);
-                //     ctx.lineTo(x, y);
-                //   }
-                //   ctx.lineTo(0, 0);
-                //   ctx.fill();
-                //   ctx.closePath();
-                // }}
+                numberOfPieces={1000}
               />
             )}
           </>
         ) : (
           <>
-            <div style={{ position: "absolute", top: "10px" }}>
-              <div>Текущий игрок: </div>
-              <div style={{ fontSize: "60px" }}>
-                {detectСurrentЗlayer(currentPlayer)}
-              </div>
-            </div>
-            <div style={styleField}>
+            <Space style={styleCyrrentPlayerBox}>
+              <Typography>Текущий игрок: </Typography>
+              <Typography style={styleCurrentPlayerText}>
+                {detectСurrentPlayer(currentPlayer)}
+              </Typography>
+            </Space>
+            <Space style={styleField}>
               {board.map((cell, index) => (
                 <div
                   key={index}
                   style={styleCell}
                   onClick={() => handleClick(index)}
                 >
-                  {detectСurrentЗlayer(cell)}
+                  {detectСurrentPlayer(cell)}
                 </div>
               ))}
-            </div>
+            </Space>
           </>
         )}
-        <button style={{ height: "100px" }} onClick={resetGame}>
-          Сбросить игру
-        </button>
-      </div>
-    </div>
+      </Space>
+      <Button onClick={resetGame}>Сбросить игру</Button>
+    </Space>
   );
 };
 

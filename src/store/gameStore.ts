@@ -1,9 +1,11 @@
-import create from "zustand";
+import { create } from "zustand";
+import checkWinner from "../helpers/checkWinner";
+import { GAME_STATE_KEYS } from "../constants";
 import { GameState } from "./interfaces";
 
 const useGameStore = create<GameState>((set) => ({
   board: Array(9).fill(null),
-  currentPlayer: "✟",
+  currentPlayer: GAME_STATE_KEYS.PLAYER_1,
   wins: {
     X: 0,
     O: 0,
@@ -17,22 +19,27 @@ const useGameStore = create<GameState>((set) => ({
         newBoard[index] = state.currentPlayer;
         const winner = checkWinner(newBoard);
         if (winner) {
-          // state.winner = true;
-          if (winner === "✟") {
+          if (winner === GAME_STATE_KEYS.PLAYER_1) {
             return {
               board: newBoard,
-              winner: "✟",
-              currentPlayer: state.currentPlayer === "✟" ? "◯" : "✟", //✖
+              winner: GAME_STATE_KEYS.PLAYER_1,
+              currentPlayer:
+                state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
+                  ? GAME_STATE_KEYS.PLAYER_2
+                  : GAME_STATE_KEYS.PLAYER_1,
               wins: {
                 ...state.wins,
                 X: state.wins.X + 1,
               },
             };
-          } else if (winner === "◯") {
+          } else if (winner === GAME_STATE_KEYS.PLAYER_2) {
             return {
               board: newBoard,
-              winner: "◯",
-              currentPlayer: state.currentPlayer === "✟" ? "◯" : "✟",
+              winner: GAME_STATE_KEYS.PLAYER_2,
+              currentPlayer:
+                state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
+                  ? GAME_STATE_KEYS.PLAYER_2
+                  : GAME_STATE_KEYS.PLAYER_1,
               wins: {
                 ...state.wins,
                 O: state.wins.O + 1,
@@ -41,7 +48,10 @@ const useGameStore = create<GameState>((set) => ({
           } else {
             return {
               board: newBoard,
-              currentPlayer: state.currentPlayer === "✟" ? "◯" : "✟",
+              currentPlayer:
+                state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
+                  ? GAME_STATE_KEYS.PLAYER_2
+                  : GAME_STATE_KEYS.PLAYER_1,
               wins: {
                 ...state.wins,
                 ties: state.wins.ties + 1,
@@ -51,7 +61,10 @@ const useGameStore = create<GameState>((set) => ({
         } else {
           return {
             board: newBoard,
-            currentPlayer: state.currentPlayer === "✟" ? "◯" : "✟",
+            currentPlayer:
+              state.currentPlayer === GAME_STATE_KEYS.PLAYER_1
+                ? GAME_STATE_KEYS.PLAYER_2
+                : GAME_STATE_KEYS.PLAYER_1,
           };
         }
       }
@@ -59,37 +72,15 @@ const useGameStore = create<GameState>((set) => ({
     });
   },
   resetGame: () => {
-    set({ board: Array(9).fill(null), currentPlayer: "✟", winner: null }); //◯
+    set({
+      board: Array(9).fill(null),
+      currentPlayer: GAME_STATE_KEYS.PLAYER_1,
+      winner: null,
+    });
   },
   resetStats: () => {
     set({ wins: { X: 0, O: 0, ties: 0 } });
   },
 }));
-
-const checkWinner = (board: (string | null)[]): string | null => {
-  const winningCombos: number[][] = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for (let i = 0; i < winningCombos.length; i++) {
-    const [a, b, c] = winningCombos[i];
-    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return board[a];
-    }
-  }
-
-  if (board.every((cell) => cell !== null)) {
-    return "tie";
-  }
-
-  return null;
-};
 
 export default useGameStore;

@@ -1,11 +1,7 @@
-export const styleStatisticsBox = { display: "flex", flexDirection: "column" };
-
-export const stylePie = {
-  height: "200px",
-  display: "flex",
-  justifyContent: "center",
-};
+export const styleStatisticsContainer = { height: "100%" };
 
 export const styleBar = {
   height: "150px",
 };
+
+export const stylePie = { height: "300px", width: "300px" };

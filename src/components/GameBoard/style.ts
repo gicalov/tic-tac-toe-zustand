@@ -1,12 +1,12 @@
 export const styleCell = {
   width: "94px",
   height: "94px",
-  backgroundColor: "white",
+  backgroundColor: "black",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   fontSize: "60px",
-  color: "black",
+  color: "white",
   cursor: "pointer",
 };
 
@@ -18,7 +18,7 @@ export const styleField = {
   gridTemplateColumns: "repeat(3, 1fr)",
   gridTemplateRows: "repeat(3, 1fr)",
   gap: "2px",
-  backgroundColor: "black",
+  backgroundColor: "white",
 };
 
 export const styleGameBoardContainer = {
@@ -30,3 +30,17 @@ export const styleGameBoardContainer = {
 };
 
 export const styleNolick = { width: "80px", geight: "80px" };
+
+export const styleWinnerText = { fontSize: "60px" };
+
+export const styleConfetti = { width: "100vw" };
+
+export const styleCyrrentPlayerBox: React.CSSProperties = {
+  position: "absolute",
+  top: "10px",
+};
+
+export const styleCurrentPlayerText: React.CSSProperties = {
+  position: "absolute",
+  top: "10px",
+};
