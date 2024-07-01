@@ -53,11 +53,13 @@ export const options = (isPie: boolean) => ({
     x: {
       ticks: {
         color: "#fff",
+        stepSize: 1,
       },
     },
     y: {
       ticks: {
         color: "#fff",
+        stepSize: 1,
       },
     },
   },

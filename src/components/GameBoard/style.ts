@@ -1,7 +1,7 @@
 export const styleCell = {
   width: "94px",
   height: "94px",
-  backgroundColor: "black",
+  backgroundColor: "#121212",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -43,4 +43,5 @@ export const styleCyrrentPlayerBox: React.CSSProperties = {
 export const styleCurrentPlayerText: React.CSSProperties = {
   position: "absolute",
   top: "10px",
+  fontSize: "60px",
 };
