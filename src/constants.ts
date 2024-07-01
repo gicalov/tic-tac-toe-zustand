@@ -1,5 +1,4 @@
 import { IWins } from "./components/Statistics/interfaces";
-// import nolick from
 
 export const THEME_OPTIONS = {
   token: {
