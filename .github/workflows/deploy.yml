@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - develop # или другая ветка, которую вы хотите использовать
+      - develop # or other branch you want to deploy from
 
 jobs:
   build-and-deploy:
@@ -22,8 +22,8 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./src/main.tsx
-          # Если ваше приложение размещается в подпапке репозитория,
-          # укажите ее здесь вместо './dist'
-          # publish_dir: ./your-app-folder/dist
-          # cname: your-custom-domain.com # Опционально, если вы используете пользовательский домен
+          publish_dir: dist
+          # If your app is in a subfolder of the repository,
+          # specify that folder name here instead of 'dist'
+          # publish_dir: your-app-folder/dist
+          # cname: your-custom-domain.com # Optional, if you're using a custom domain
