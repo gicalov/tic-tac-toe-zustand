@@ -87,6 +87,6 @@ export enum GAME_STATE_KEYS {
 export const SHOW_CONFETTI_MILISECONSD = 3000;
 
 export const GAME_IMAGES = {
-  nolick: { src: "./src/assets/3F3F%3F.webp", alt: "нолик" },
-  grusni: { src: "./src/assets/sad.jpg", alt: "печаль" },
+  nolick: { src: "./src/assets/images/3F3F%3F.webp", alt: "нолик" },
+  grusni: { src: "./src/assets/images/sad.jpg", alt: "печаль" },
 };
