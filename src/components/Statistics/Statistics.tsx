@@ -29,7 +29,9 @@ const Statistics = () => {
           <Space style={styleBar}>
             <Bar data={barData(wins)} options={options(false)} />
           </Space>
-          <Button onClick={resetStats}>Сбросить статистику</Button>
+          <Button style={{ marginBottom: "20px" }} onClick={resetStats}>
+            Сбросить статистику
+          </Button>
         </Space>
       </Space>
     </Space>

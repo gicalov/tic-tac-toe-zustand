@@ -1,16 +1,16 @@
-import { Space, Layout } from "antd";
+// import { Layout } from "antd";
 import GameBoard from "./components/GameBoard/GameBoard";
 import Statistics from "./components/Statistics/Statistics";
-import { styleLayout } from "./AppStyle";
+import { StyledLayout, StyledSpace } from "./AppStyle";
 
 const App = () => {
   return (
-    <Layout style={styleLayout}>
-      <Space direction="horizontal">
+    <StyledLayout>
+      <StyledSpace>
         <GameBoard />
         <Statistics />
-      </Space>
-    </Layout>
+      </StyledSpace>
+    </StyledLayout>
   );
 };
 
