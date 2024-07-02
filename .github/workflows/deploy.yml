@@ -22,7 +22,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./src/main.tsx
           # Если ваше приложение размещается в подпапке репозитория,
           # укажите ее здесь вместо './dist'
           # publish_dir: ./your-app-folder/dist
