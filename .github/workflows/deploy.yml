@@ -23,6 +23,11 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Copy images to dist
+        run: |
+          mkdir -p dist/src/assets/images
+          cp -r src/assets/images dist/src/assets/
+
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v3
         with:
@@ -41,6 +46,7 @@ jobs:
         with:
           name: production-files
           path: ./dist
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
