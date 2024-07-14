@@ -8,6 +8,8 @@ export interface GameState {
   };
   winner: string | null;
   handleClick: (index: number) => void;
+  isStatistics: boolean;
+  isGameStarted: boolean;
   handleUpdateWins: (
     winner: string | null,
     state: GameState

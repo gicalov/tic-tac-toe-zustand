@@ -11,6 +11,8 @@ const useGameStore = create<GameState>((set) => ({
     O: 0,
     ties: 0,
   },
+  isStatistics: false,
+  isGameStarted: false,
   winner: null,
   handleClick: (index) => {
     set((state) => {
@@ -26,6 +28,7 @@ const useGameStore = create<GameState>((set) => ({
               ? GAME_STATE_KEYS.PLAYER_2
               : GAME_STATE_KEYS.PLAYER_1,
           winner: winner,
+          isGameStarted: true,
           wins: state.handleUpdateWins(winner, state),
         };
       }
@@ -35,6 +38,8 @@ const useGameStore = create<GameState>((set) => ({
   },
 
   handleUpdateWins: (winner, state) => {
+    if (winner) state.isStatistics = true;
+
     if (winner === GAME_STATE_KEYS.PLAYER_1) {
       return { ...state.wins, X: state.wins.X + 1 };
     }
@@ -55,11 +60,12 @@ const useGameStore = create<GameState>((set) => ({
       board: Array(9).fill(null),
       currentPlayer: GAME_STATE_KEYS.PLAYER_1,
       winner: null,
+      isGameStarted: false,
     });
   },
 
   resetStats: () => {
-    set({ wins: { X: 0, O: 0, ties: 0 } });
+    set({ wins: { X: 0, O: 0, ties: 0 }, isStatistics: false });
   },
 }));
 

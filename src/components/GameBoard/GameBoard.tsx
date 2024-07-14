@@ -20,8 +20,14 @@ import {
 
 const GameBoard = () => {
   const [isShowConfetti, setIsShowConfetti] = useState<boolean>(false);
-  const { board, currentPlayer, handleClick, resetGame, winner } =
-    useGameStore();
+  const {
+    board,
+    currentPlayer,
+    handleClick,
+    resetGame,
+    isGameStarted,
+    winner,
+  } = useGameStore();
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -74,8 +80,8 @@ const GameBoard = () => {
               {isShowConfetti && (
                 <Confetti
                   style={styleConfetti}
-                  gravity={10}
-                  numberOfPieces={1000}
+                  gravity={0.2}
+                  numberOfPieces={300}
                 />
               )}
             </>
@@ -102,7 +108,11 @@ const GameBoard = () => {
           </>
         )}
       </Space>
-      <Button onClick={resetGame}>Сбросить игру</Button>
+      {isGameStarted ? (
+        <Button onClick={resetGame}>Сбросить игру</Button>
+      ) : (
+        <Typography>Нажми на ячейку чтобы начать игру (^人^)</Typography>
+      )}
     </Space>
   );
 };

@@ -8,7 +8,7 @@ import { pieData, barData, options } from "../../constants";
 import { styleBar, styleStatisticsContainer, stylePie } from "./style";
 
 const Statistics = () => {
-  const { wins, resetStats } = useGameStore();
+  const { wins, isStatistics, resetStats } = useGameStore();
 
   useEffect(() => {
     Chart.register(CategoryScale, LinearScale);
@@ -16,24 +16,30 @@ const Statistics = () => {
 
   return (
     <Space style={styleStatisticsContainer}>
-      <Space direction="vertical">
-        <Typography>Статистика игр:</Typography>
-        <Space direction="vertical" align="center">
-          <Space align="center">
-            <Pie
-              data={pieData(wins)}
-              options={options(true)}
-              style={stylePie}
-            />
+      {isStatistics ? (
+        <Space direction="vertical">
+          <Typography>Статистика игр:</Typography>
+          <Space direction="vertical" align="center">
+            <Space align="center">
+              <Pie
+                data={pieData(wins)}
+                options={options(true)}
+                style={stylePie}
+              />
+            </Space>
+            <Space style={styleBar}>
+              <Bar data={barData(wins)} options={options(false)} />
+            </Space>
+            <Button style={{ marginBottom: "20px" }} onClick={resetStats}>
+              Сбросить статистику
+            </Button>
           </Space>
-          <Space style={styleBar}>
-            <Bar data={barData(wins)} options={options(false)} />
-          </Space>
-          <Button style={{ marginBottom: "20px" }} onClick={resetStats}>
-            Сбросить статистику
-          </Button>
         </Space>
-      </Space>
+      ) : (
+        <Typography>
+          Здесь скоро появится статистика ваших игр \(￣︶￣)/
+        </Typography>
+      )}
     </Space>
   );
 };
