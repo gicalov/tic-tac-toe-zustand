@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import { Component, ErrorInfo, ReactNode } from "react";
 import { Typography } from "antd";
 import { ErrorBoundaryState, ErrorBoundaryProps } from "./interfaces";
 
