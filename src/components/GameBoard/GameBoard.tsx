@@ -34,11 +34,15 @@ const GameBoard = () => {
   } = useGameStore();
   const [fieldSize, setFieldSize] = useState<number | null>(boardSize);
 
-  const gridTemplateColumns = `repeat(${fieldSize}, 1fr)`;
-  const gridTemplateRows = `repeat(${fieldSize}, 1fr)`;
+  const gridTemplate = {
+    gridTemplateColumns: `repeat(${fieldSize}, 1fr)`,
+    gridTemplateRows: `repeat(${fieldSize}, 1fr)`,
+  };
+
   const cellSize = {
-    width: `calc(94px - ${boardSize * 5}px)`,
-    height: `calc(94px - ${boardSize * 5}px)`,
+    width: `calc(94px - ${boardSize * 6}px)`,
+    height: `calc(94px - ${boardSize * 6}px)`,
+    fontSize: `calc(80px - ${boardSize * 6}px)`,
   };
 
   useEffect(() => {
@@ -63,7 +67,7 @@ const GameBoard = () => {
       GAME_STATE_KEYS.PLAYER_1
     ) : cell === GAME_STATE_KEYS.PLAYER_2 ? (
       <img
-        style={{ ...styleNolick, width: `calc(80px - ${boardSize * 5}px)` }}
+        style={{ ...styleNolick, width: `calc(80px - ${boardSize * 6}px)` }}
         src={GAME_IMAGES.nolick.src}
         alt={GAME_IMAGES.nolick.alt}
       />
@@ -114,9 +118,7 @@ const GameBoard = () => {
                 {detectСurrentPlayer(currentPlayer)}
               </Typography>
             </Space>
-            <Space
-              style={{ ...styleField, gridTemplateColumns, gridTemplateRows }}
-            >
+            <Space style={{ ...styleField, ...gridTemplate }}>
               {board.map((cell, index) => (
                 <div
                   key={index}
