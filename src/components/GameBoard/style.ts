@@ -36,6 +36,7 @@ export const styleConfetti = { width: "100vw" };
 export const styleCyrrentPlayerBox: React.CSSProperties = {
   position: "absolute",
   top: "10px",
+  left: "10px",
 };
 
 export const styleCurrentPlayerText: React.CSSProperties = {

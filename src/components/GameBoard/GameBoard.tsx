@@ -129,13 +129,22 @@ const GameBoard = () => {
       ) : (
         <>
           <Typography>Нажми на ячейку чтобы начать игру (^人^)</Typography>
-          <Typography>Введите колличество игровых ячеек</Typography>
-          <InputNumber
-            onChange={(num) => handleChangeField(num)}
-            value={fieldSize ? Number(fieldSize) : undefined}
-            min={1}
-            max={10}
-          />
+          <Space
+            style={{
+              ...styleCyrrentPlayerBox,
+              bottom: 0,
+              top: "auto",
+              left: "10px",
+            }}
+          >
+            <Typography>Введите колличество игровых ячеек</Typography>
+            <InputNumber
+              onChange={(num) => handleChangeField(num)}
+              value={fieldSize ? Number(fieldSize) : undefined}
+              min={1}
+              max={10}
+            />
+          </Space>
         </>
       )}
     </Space>
