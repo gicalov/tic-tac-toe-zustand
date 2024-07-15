@@ -9,19 +9,16 @@ import {
   GAME_IMAGES,
 } from "../../constants";
 import {
-  styleCell,
-  styleField,
   StyledSpace,
   styleGameBoardContainer,
-  styleNolick,
   styleWinnerText,
   styleConfetti,
   styleCyrrentPlayerBox,
   styleCurrentPlayerText,
+  useStyle,
 } from "./style";
 
 const GameBoard = () => {
-  const [isShowConfetti, setIsShowConfetti] = useState<boolean>(false);
   const {
     board,
     currentPlayer,
@@ -32,18 +29,10 @@ const GameBoard = () => {
     handleChangeFieldSize,
     boardSize,
   } = useGameStore();
-  const [fieldSize, setFieldSize] = useState<number | null>(boardSize);
+  const [isShowConfetti, setIsShowConfetti] = useState<boolean>(false);
+  const [fieldSize, setFieldSize] = useState<number>(boardSize);
 
-  const gridTemplate = {
-    gridTemplateColumns: `repeat(${fieldSize}, 1fr)`,
-    gridTemplateRows: `repeat(${fieldSize}, 1fr)`,
-  };
-
-  const cellSize = {
-    width: `calc(94px - ${boardSize * 6}px)`,
-    height: `calc(94px - ${boardSize * 6}px)`,
-    fontSize: `calc(80px - ${boardSize * 6}px)`,
-  };
+  const styles = useStyle(fieldSize);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -67,14 +56,14 @@ const GameBoard = () => {
       GAME_STATE_KEYS.PLAYER_1
     ) : cell === GAME_STATE_KEYS.PLAYER_2 ? (
       <img
-        style={{ ...styleNolick, width: `calc(80px - ${boardSize * 6}px)` }}
+        style={styles.nolick}
         src={GAME_IMAGES.nolick.src}
         alt={GAME_IMAGES.nolick.alt}
       />
     ) : null;
   };
 
-  const handleChangeField = (size: number | null) => {
+  const handleChangeField = (size: number) => {
     if (checkRange(size)) {
       setFieldSize(size);
 
@@ -118,11 +107,11 @@ const GameBoard = () => {
                 {detectСurrentPlayer(currentPlayer)}
               </Typography>
             </Space>
-            <Space style={{ ...styleField, ...gridTemplate }}>
+            <Space style={styles.field}>
               {board.map((cell, index) => (
                 <div
                   key={index}
-                  style={{ ...styleCell, ...cellSize }}
+                  style={styles.cell}
                   onClick={() => handleClick(index)}
                 >
                   {detectСurrentPlayer(cell)}
@@ -140,7 +129,7 @@ const GameBoard = () => {
           <StyledSpace>
             <Typography>Введите колличество игровых ячеек</Typography>
             <InputNumber
-              onChange={(num) => handleChangeField(num)}
+              onChange={(num) => handleChangeField(num as number)}
               value={fieldSize ? Number(fieldSize) : undefined}
               min={1}
               max={10}

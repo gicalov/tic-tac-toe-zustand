@@ -1,27 +1,6 @@
 import styled from "styled-components";
 import { Space } from "antd";
 
-export const styleCell = {
-  width: "94px",
-  height: "94px",
-  backgroundColor: "#121212",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  fontSize: "60px",
-  color: "white",
-  cursor: "pointer",
-};
-
-export const styleField = {
-  marginTop: "100px",
-  width: "auto",
-  height: "auto",
-  display: "grid",
-  gap: "2px",
-  backgroundColor: "white",
-};
-
 export const styleGameBoardContainer = {
   minWidth: "50vw",
   height: "90vh",
@@ -29,8 +8,6 @@ export const styleGameBoardContainer = {
   justifyContent: "center",
   alignItems: "center",
 };
-
-export const styleNolick = { width: "80px", geight: "80px" };
 
 export const styleWinnerText = { fontSize: "60px" };
 
@@ -64,3 +41,31 @@ export const StyledSpace = styled(Space)`
     flex-direction: column;
   }
 `;
+
+export const useStyle = (fieldSize: number) => ({
+  cell: {
+    backgroundColor: "#121212",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "white",
+    cursor: "pointer",
+    width: `calc(94px - ${fieldSize * 6}px)`,
+    height: `calc(94px - ${fieldSize * 6}px)`,
+    fontSize: `calc(80px - ${fieldSize * 6}px)`,
+  },
+  field: {
+    marginTop: "100px",
+    width: "auto",
+    height: "auto",
+    display: "grid",
+    gap: "2px",
+    backgroundColor: "white",
+    gridTemplateColumns: `repeat(${fieldSize}, 1fr)`,
+    gridTemplateRows: `repeat(${fieldSize}, 1fr)`,
+  },
+  nolick: {
+    geight: "80px",
+    width: `calc(80px - ${fieldSize * 6}px)`,
+  },
+});
