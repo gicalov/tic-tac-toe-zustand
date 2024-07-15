@@ -20,7 +20,6 @@ import {
 
 const GameBoard = () => {
   const [isShowConfetti, setIsShowConfetti] = useState<boolean>(false);
-  const [fieldSize, setFieldSize] = useState<number | null>(3);
   const {
     board,
     currentPlayer,
@@ -29,7 +28,9 @@ const GameBoard = () => {
     isGameStarted,
     winner,
     handleChangeFieldSize,
+    boardSize,
   } = useGameStore();
+  const [fieldSize, setFieldSize] = useState<number | null>(boardSize);
 
   const gridTemplateColumns = `repeat(${fieldSize}, 1fr)`;
   const gridTemplateRows = `repeat(${fieldSize}, 1fr)`;

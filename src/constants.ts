@@ -67,17 +67,6 @@ export const options = (isPie: boolean) => ({
   maintainAspectRatio: false,
 });
 
-export const winningCombos: number[][] = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
-
 export enum GAME_STATE_KEYS {
   PLAYER_1 = "✟",
   PLAYER_2 = "◯",

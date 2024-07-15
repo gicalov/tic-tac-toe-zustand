@@ -14,13 +14,13 @@ const useGameStore = create<GameState>((set) => ({
   isStatistics: false,
   isGameStarted: false,
   winner: null,
-  fieldSize: 3,
+  boardSize: 3,
 
-  handleChangeFieldSize: (fieldSize: number) => {
-    console.log(fieldSize);
+  handleChangeFieldSize: (boardSize: number) => {
+    console.log(boardSize);
     set({
-      board: Array(fieldSize * fieldSize).fill(null),
-      fieldSize: fieldSize,
+      board: Array(boardSize * boardSize).fill(null),
+      boardSize: boardSize,
     });
   },
 
@@ -68,7 +68,7 @@ const useGameStore = create<GameState>((set) => ({
   resetGame: () => {
     set((state) => {
       return {
-        board: Array(state.fieldSize * state.fieldSize).fill(null),
+        board: Array(state.boardSize * state.boardSize).fill(null),
         currentPlayer: GAME_STATE_KEYS.PLAYER_1,
         winner: null,
         isGameStarted: false,
