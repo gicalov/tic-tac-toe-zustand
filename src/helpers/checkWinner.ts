@@ -1,6 +1,7 @@
 import { winningCombos } from "../constants";
 
 const checkWinner = (board: (string | null)[]): string | null => {
+  console.log(board);
   for (let i = 0; i < winningCombos.length; i++) {
     const [a, b, c] = winningCombos[i];
 

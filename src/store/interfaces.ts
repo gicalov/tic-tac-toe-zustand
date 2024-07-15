@@ -20,4 +20,6 @@ export interface GameState {
   };
   resetGame: () => void;
   resetStats: () => void;
+  handleChangeFieldSize: (fieldSize: number) => void;
+  fieldSize: number;
 }

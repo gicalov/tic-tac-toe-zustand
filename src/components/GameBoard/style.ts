@@ -12,17 +12,15 @@ export const styleCell = {
 
 export const styleField = {
   marginTop: "100px",
-  width: "286px",
-  height: "286px",
+  width: "auto",
+  height: "auto",
   display: "grid",
-  gridTemplateColumns: "repeat(3, 1fr)",
-  gridTemplateRows: "repeat(3, 1fr)",
   gap: "2px",
   backgroundColor: "white",
 };
 
 export const styleGameBoardContainer = {
-  width: "50vw",
+  minWidth: "50vw",
   height: "90vh",
   display: "flex",
   justifyContent: "center",

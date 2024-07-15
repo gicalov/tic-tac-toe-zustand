@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useGameStore from "../../store/gameStore";
 import Confetti from "react-confetti";
-import { Button, Space, Typography } from "antd";
+import { Button, Space, Typography, InputNumber } from "antd";
 import {
   GAME_STATE_KEYS,
   SHOW_CONFETTI_MILISECONSD,
@@ -20,6 +20,7 @@ import {
 
 const GameBoard = () => {
   const [isShowConfetti, setIsShowConfetti] = useState<boolean>(false);
+  const [fieldSize, setFieldSize] = useState<number | null>(3);
   const {
     board,
     currentPlayer,
@@ -27,7 +28,11 @@ const GameBoard = () => {
     resetGame,
     isGameStarted,
     winner,
+    handleChangeFieldSize,
   } = useGameStore();
+
+  const gridTemplateColumns = `repeat(${fieldSize}, 1fr)`;
+  const gridTemplateRows = `repeat(${fieldSize}, 1fr)`;
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -56,6 +61,14 @@ const GameBoard = () => {
         alt={GAME_IMAGES.nolick.alt}
       />
     ) : null;
+  };
+
+  const handleChangeField = (size: number | null) => {
+    if (Number(size) < 11 && Number(size) > 2) {
+      setFieldSize(size);
+
+      if (size) handleChangeFieldSize(size);
+    }
   };
 
   return (
@@ -94,7 +107,9 @@ const GameBoard = () => {
                 {detectСurrentPlayer(currentPlayer)}
               </Typography>
             </Space>
-            <Space style={styleField}>
+            <Space
+              style={{ ...styleField, gridTemplateColumns, gridTemplateRows }}
+            >
               {board.map((cell, index) => (
                 <div
                   key={index}
@@ -111,7 +126,16 @@ const GameBoard = () => {
       {isGameStarted ? (
         <Button onClick={resetGame}>Сбросить игру</Button>
       ) : (
-        <Typography>Нажми на ячейку чтобы начать игру (^人^)</Typography>
+        <>
+          <Typography>Нажми на ячейку чтобы начать игру (^人^)</Typography>
+          <Typography>Введите колличество игровых ячеек</Typography>
+          <InputNumber
+            onChange={(num) => handleChangeField(num)}
+            value={fieldSize ? Number(fieldSize) : undefined}
+            min={1}
+            max={10}
+          />
+        </>
       )}
     </Space>
   );
