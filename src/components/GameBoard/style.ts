@@ -1,3 +1,6 @@
+import styled from "styled-components";
+import { Space } from "antd";
+
 export const styleCell = {
   width: "94px",
   height: "94px",
@@ -44,3 +47,20 @@ export const styleCurrentPlayerText: React.CSSProperties = {
   top: "10px",
   fontSize: "60px",
 };
+
+export const StyledSpace = styled(Space)`
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  top: auto;
+  font-size: 24px;
+
+  @media (max-width: 768px) {
+    bottom: auto;
+    top: 10px;
+    left: auto;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+`;

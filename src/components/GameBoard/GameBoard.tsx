@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import useGameStore from "../../store/gameStore";
-import Confetti from "react-confetti";
 import { Button, Space, Typography, InputNumber } from "antd";
+import Confetti from "react-confetti";
+import useGameStore from "../../store/gameStore";
+import checkRange from "./../../helpers/checkRange";
 import {
   GAME_STATE_KEYS,
   SHOW_CONFETTI_MILISECONSD,
@@ -10,6 +11,7 @@ import {
 import {
   styleCell,
   styleField,
+  StyledSpace,
   styleGameBoardContainer,
   styleNolick,
   styleWinnerText,
@@ -34,6 +36,10 @@ const GameBoard = () => {
 
   const gridTemplateColumns = `repeat(${fieldSize}, 1fr)`;
   const gridTemplateRows = `repeat(${fieldSize}, 1fr)`;
+  const cellSize = {
+    width: `calc(94px - ${boardSize * 5}px)`,
+    height: `calc(94px - ${boardSize * 5}px)`,
+  };
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -57,7 +63,7 @@ const GameBoard = () => {
       GAME_STATE_KEYS.PLAYER_1
     ) : cell === GAME_STATE_KEYS.PLAYER_2 ? (
       <img
-        style={styleNolick}
+        style={{ ...styleNolick, width: `calc(80px - ${boardSize * 5}px)` }}
         src={GAME_IMAGES.nolick.src}
         alt={GAME_IMAGES.nolick.alt}
       />
@@ -65,7 +71,7 @@ const GameBoard = () => {
   };
 
   const handleChangeField = (size: number | null) => {
-    if (Number(size) < 11 && Number(size) > 2) {
+    if (checkRange(size)) {
       setFieldSize(size);
 
       if (size) handleChangeFieldSize(size);
@@ -114,7 +120,7 @@ const GameBoard = () => {
               {board.map((cell, index) => (
                 <div
                   key={index}
-                  style={styleCell}
+                  style={{ ...styleCell, ...cellSize }}
                   onClick={() => handleClick(index)}
                 >
                   {detectСurrentPlayer(cell)}
@@ -129,14 +135,7 @@ const GameBoard = () => {
       ) : (
         <>
           <Typography>Нажми на ячейку чтобы начать игру (^人^)</Typography>
-          <Space
-            style={{
-              ...styleCyrrentPlayerBox,
-              bottom: 0,
-              top: "auto",
-              left: "10px",
-            }}
-          >
+          <StyledSpace>
             <Typography>Введите колличество игровых ячеек</Typography>
             <InputNumber
               onChange={(num) => handleChangeField(num)}
@@ -144,7 +143,7 @@ const GameBoard = () => {
               min={1}
               max={10}
             />
-          </Space>
+          </StyledSpace>
         </>
       )}
     </Space>
