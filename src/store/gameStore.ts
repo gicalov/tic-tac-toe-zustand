@@ -29,7 +29,8 @@ const useGameStore = create<GameState>((set) => ({
       if (state.board[index] === null) {
         const newBoard = [...state.board];
         newBoard[index] = state.currentPlayer;
-        const winner = checkWinner(newBoard);
+        // console.log(index);
+        const winner = checkWinner(newBoard, index, state.boardSize);
 
         return {
           board: newBoard,
